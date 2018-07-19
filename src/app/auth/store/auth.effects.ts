@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { fromPromise } from 'rxjs/observable/fromPromise';
+import { from } from 'rxjs';
 import { Effect, Actions } from '@ngrx/effects';
 import * as firebase from 'firebase';
 
@@ -15,14 +15,14 @@ export class AuthEffects {
       return action.payload;
     }),
     switchMap((authData: { username: string; password: string }) => {
-      return fromPromise(
+      return from(
         firebase
           .auth()
           .createUserWithEmailAndPassword(authData.username, authData.password)
       );
     }),
     switchMap(() => {
-      return fromPromise(firebase.auth().currentUser.getIdToken());
+      return from(firebase.auth().currentUser.getIdToken());
     }),
     mergeMap((token: string) => {
       this.router.navigate(['/']);
@@ -44,14 +44,14 @@ export class AuthEffects {
       return action.payload;
     }),
     switchMap((authData: { username: string; password: string }) => {
-      return fromPromise(
+      return from(
         firebase
           .auth()
           .signInWithEmailAndPassword(authData.username, authData.password)
       );
     }),
     switchMap(() => {
-      return fromPromise(firebase.auth().currentUser.getIdToken());
+      return from(firebase.auth().currentUser.getIdToken());
     }),
     mergeMap((token: string) => {
       this.router.navigate(['/']);
