@@ -28,7 +28,7 @@ import { environment } from '../environments/environment';
     CoreModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([AuthEffects]),
-    StoreRouterConnectingModule,
+    StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   bootstrap: [AppComponent]
