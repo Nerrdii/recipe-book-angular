@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
@@ -11,7 +11,8 @@ import * as fromRecipe from '../store/recipe.reducers';
 @Injectable()
 export class RecipeEffects {
   @Effect()
-  recipeFetch = this.actions$.ofType(RecipeActions.FETCH_RECIPES).pipe(
+  recipeFetch = this.actions$.pipe(
+    ofType(RecipeActions.FETCH_RECIPES),
     switchMap((action: RecipeActions.FetchRecipes) => {
       return this.httpClient.get<Recipe[]>(
         'https://recipe-book-angular-ad61c.firebaseio.com/recipes.json',
@@ -37,7 +38,8 @@ export class RecipeEffects {
   );
 
   @Effect({ dispatch: false })
-  recipeStore = this.actions$.ofType(RecipeActions.STORE_RECIPES).pipe(
+  recipeStore = this.actions$.pipe(
+    ofType(RecipeActions.STORE_RECIPES),
     withLatestFrom(this.store.select('recipes')),
     switchMap(([action, state]) => {
       const req = new HttpRequest(
