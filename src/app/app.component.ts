@@ -9,12 +9,14 @@ import * as firebase from 'firebase';
 export class AppComponent implements OnInit {
   ngOnInit() {
     firebase.initializeApp({
-      apiKey: 'AIzaSyBaJ-vlleqF1yHTPkCCV2ScFUpCAz8sjw4',
-      authDomain: 'recipe-book-angular-ad61c.firebaseapp.com',
-      databaseURL: 'https://recipe-book-angular-ad61c.firebaseio.com',
-      projectId: 'recipe-book-angular-ad61c',
-      storageBucket: 'recipe-book-angular-ad61c.appspot.com',
-      messagingSenderId: '182147668530'
+      apiKey: 'AIzaSyAnEoUzYbM7pHV6quOjRX1jQKfVn_68qpU',
+      authDomain: 'recipe-book-angular-44b2c.firebaseapp.com',
+      databaseURL: 'https://recipe-book-angular-44b2c.firebaseio.com',
+      projectId: 'recipe-book-angular-44b2c',
+      storageBucket: '',
+      messagingSenderId: '688209381830',
+      appId: '1:688209381830:web:786fa5e7d0b7696743cac7',
+      measurementId: 'G-KRQ9HTDZEH'
     });
   }
 }

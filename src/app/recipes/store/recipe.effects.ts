@@ -15,7 +15,7 @@ export class RecipeEffects {
     ofType(RecipeActions.FETCH_RECIPES),
     switchMap((action: RecipeActions.FetchRecipes) => {
       return this.httpClient.get<Recipe[]>(
-        'https://recipe-book-angular-ad61c.firebaseio.com/recipes.json',
+        'https://recipe-book-angular-44b2c.firebaseio.com/recipes.json',
         {
           observe: 'body',
           responseType: 'json'
@@ -44,7 +44,7 @@ export class RecipeEffects {
     switchMap(([action, state]) => {
       const req = new HttpRequest(
         'PUT',
-        'https://recipe-book-angular-ad61c.firebaseio.com/recipes.json',
+        'https://recipe-book-angular-44b2c.firebaseio.com/recipes.json',
         state.recipes,
         {
           reportProgress: true
