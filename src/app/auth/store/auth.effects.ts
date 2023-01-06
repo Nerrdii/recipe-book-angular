@@ -2,13 +2,20 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { from } from 'rxjs';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import * as firebase from 'firebase';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 
 import * as AuthActions from './auth.actions';
 import { map, switchMap, mergeMap, tap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthEffects {
+  auth = getAuth();
+  currentUser = this.auth.currentUser;
+
   @Effect()
   authSignup = this.actions$.pipe(
     ofType(AuthActions.TRY_SIGNUP),
@@ -17,24 +24,26 @@ export class AuthEffects {
     }),
     switchMap((authData: { username: string; password: string }) => {
       return from(
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(authData.username, authData.password)
+        createUserWithEmailAndPassword(
+          this.auth,
+          authData.username,
+          authData.password
+        )
       );
     }),
     switchMap(() => {
-      return from(firebase.auth().currentUser.getIdToken());
+      return from(this.currentUser.getIdToken());
     }),
     mergeMap((token: string) => {
       this.router.navigate(['/']);
       return [
         {
-          type: AuthActions.SIGNUP
+          type: AuthActions.SIGNUP,
         },
         {
           type: AuthActions.SET_TOKEN,
-          payload: token
-        }
+          payload: token,
+        },
       ];
     })
   );
@@ -47,24 +56,26 @@ export class AuthEffects {
     }),
     switchMap((authData: { username: string; password: string }) => {
       return from(
-        firebase
-          .auth()
-          .signInWithEmailAndPassword(authData.username, authData.password)
+        signInWithEmailAndPassword(
+          this.auth,
+          authData.username,
+          authData.password
+        )
       );
     }),
     switchMap(() => {
-      return from(firebase.auth().currentUser.getIdToken());
+      return from(this.currentUser.getIdToken());
     }),
     mergeMap((token: string) => {
       this.router.navigate(['/']);
       return [
         {
-          type: AuthActions.SIGNIN
+          type: AuthActions.SIGNIN,
         },
         {
           type: AuthActions.SET_TOKEN,
-          payload: token
-        }
+          payload: token,
+        },
       ];
     })
   );
