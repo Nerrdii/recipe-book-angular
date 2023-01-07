@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { from } from 'rxjs';
-import { Effect, Actions, ofType } from '@ngrx/effects';
+import { createEffect, Actions, ofType } from '@ngrx/effects';
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -16,8 +16,8 @@ export class AuthEffects {
   auth = getAuth();
   currentUser = this.auth.currentUser;
 
-  @Effect()
-  authSignup = this.actions$.pipe(
+  
+  authSignup = createEffect(() => this.actions$.pipe(
     ofType(AuthActions.TRY_SIGNUP),
     map((action: AuthActions.TrySignup) => {
       return action.payload;
@@ -46,10 +46,10 @@ export class AuthEffects {
         },
       ];
     })
-  );
+  ));
 
-  @Effect()
-  authSignin = this.actions$.pipe(
+  
+  authSignin = createEffect(() => this.actions$.pipe(
     ofType(AuthActions.TRY_SIGNIN),
     map((action: AuthActions.TrySignin) => {
       return action.payload;
@@ -78,15 +78,15 @@ export class AuthEffects {
         },
       ];
     })
-  );
+  ));
 
-  @Effect({ dispatch: false })
-  authLogout = this.actions$.pipe(
+  
+  authLogout = createEffect(() => this.actions$.pipe(
     ofType(AuthActions.LOGOUT),
     tap(() => {
       this.router.navigate(['/']);
     })
-  );
+  ), { dispatch: false });
 
   constructor(private actions$: Actions, private router: Router) {}
 }

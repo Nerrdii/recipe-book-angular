@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Effect, Actions, ofType } from '@ngrx/effects';
+import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
@@ -10,8 +10,8 @@ import * as fromRecipe from '../store/recipe.reducers';
 
 @Injectable()
 export class RecipeEffects {
-  @Effect()
-  recipeFetch = this.actions$.pipe(
+  
+  recipeFetch = createEffect(() => this.actions$.pipe(
     ofType(RecipeActions.FETCH_RECIPES),
     switchMap((action: RecipeActions.FetchRecipes) => {
       return this.httpClient.get<Recipe[]>(
@@ -35,10 +35,10 @@ export class RecipeEffects {
         payload: recipes
       };
     })
-  );
+  ));
 
-  @Effect({ dispatch: false })
-  recipeStore = this.actions$.pipe(
+  
+  recipeStore = createEffect(() => this.actions$.pipe(
     ofType(RecipeActions.STORE_RECIPES),
     withLatestFrom(this.store.select('recipes')),
     switchMap(([action, state]) => {
@@ -52,7 +52,7 @@ export class RecipeEffects {
       );
       return this.httpClient.request(req);
     })
-  );
+  ), { dispatch: false });
 
   constructor(
     private actions$: Actions,
