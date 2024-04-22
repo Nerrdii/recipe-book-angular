@@ -37,7 +37,7 @@ import { environment } from "../environments/environment";
     StoreRouterConnectingModule.forRoot({
       serializer: FullRouterStateSerializer,
     }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    !environment.production ? StoreDevtoolsModule.instrument({connectInZone: true}) : [],
     provideFirebaseApp(() =>
       initializeApp({
         apiKey: "AIzaSyAnEoUzYbM7pHV6quOjRX1jQKfVn_68qpU",
