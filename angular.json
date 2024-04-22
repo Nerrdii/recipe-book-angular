@@ -71,18 +71,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "recipe-book-angular:build"
+            "buildTarget": "recipe-book-angular:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "recipe-book-angular:build:production"
+              "buildTarget": "recipe-book-angular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "recipe-book-angular:build"
+            "buildTarget": "recipe-book-angular:build"
           }
         },
         "test": {
