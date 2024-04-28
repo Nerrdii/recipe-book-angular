@@ -28,7 +28,7 @@
     "@ngrx/store-devtools": "^17.2.0",
     "bootstrap": "^3.4.1",
     "core-js": "^2.5.7",
-    "express": "^4.16.3",
+    "express": "^4.19.2",
     "firebase": "^9.15.0",
     "rxjs": "^6.5.3",
     "rxjs-compat": "^6.2.2",
